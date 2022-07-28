@@ -1,15 +1,15 @@
 # WSDL to Go
 
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/hooklift/gowsdl?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![GoDoc](https://godoc.org/github.com/hooklift/gowsdl?status.svg)](https://godoc.org/github.com/hooklift/gowsdl)
-[![Build Status](https://travis-ci.org/hooklift/gowsdl.svg?branch=master)](https://travis-ci.org/hooklift/gowsdl)
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/shipink/gowsdl?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![GoDoc](https://godoc.org/github.com/shipink/gowsdl?status.svg)](https://godoc.org/github.com/shipink/gowsdl)
+[![Build Status](https://travis-ci.org/shipink/gowsdl.svg?branch=master)](https://travis-ci.org/shipink/gowsdl)
 
 Generates Go code from a WSDL file.
 
 ### Install
 
-* [Download binary release](https://github.com/hooklift/gowsdl/releases)
-* Download and build locally: `go get github.com/hooklift/gowsdl/...`
+* [Download binary release](https://github.com/shipink/gowsdl/releases)
+* Download and build locally: `go get github.com/shipink/gowsdl/...`
 * Install from Homebrew: `brew install gowsdl`
 
 ### Goals
