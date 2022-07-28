@@ -253,6 +253,7 @@ type options struct {
 	httpHeaders      map[string]string
 	mtom             bool
 	mma              bool
+	customEnvelope   string
 }
 
 var defaultOptions = options{
@@ -331,6 +332,13 @@ func WithMTOM() Option {
 func WithMIMEMultipartAttachments() Option {
 	return func(o *options) {
 		o.mma = true
+	}
+}
+
+// WithCustomEnvelope is an Option to set custom Envelope namespace support
+func WithCustomEnvelope(ns string) Option {
+	return func(o *options) {
+		o.customEnvelope = ns
 	}
 }
 
@@ -416,6 +424,12 @@ func (s *Client) call(ctx context.Context, soapAction string, request, response 
 	// SOAP envelope capable of namespace prefixes
 	envelope := SOAPEnvelope{
 		XmlNS: XmlNsSoapEnv,
+	}
+
+	if s.opts.customEnvelope != "" {
+		envelope = SOAPEnvelope{
+			XmlNS: s.opts.customEnvelope,
+		}
 	}
 
 	if s.headers != nil && len(s.headers) > 0 {
@@ -514,7 +528,7 @@ func (s *Client) call(ctx context.Context, soapAction string, request, response 
 	}
 
 	var mmaBoundary string
-	if s.opts.mma{
+	if s.opts.mma {
 		mmaBoundary, err = getMmaHeader(res.Header.Get("Content-Type"))
 		if err != nil {
 			return err
