@@ -22,8 +22,7 @@ type SOAPDecoder interface {
 }
 
 type SOAPEnvelopeResponse struct {
-	XMLName     xml.Name `xml:"soap:Envelope"`
-	XmlNS       string   `xml:"xmlns:soap,attr"`
+	XMLName     xml.Name `xml:"http://schemas.xmlsoap.org/soap/envelope/ Envelope"`
 	Header      *SOAPHeaderResponse
 	Body        SOAPBodyResponse
 	Attachments []MIMEMultipartAttachment `xml:"attachments,omitempty"`
@@ -519,12 +518,7 @@ func (s *Client) call(ctx context.Context, soapAction string, request, response 
 
 	// xml Decoder (used with and without MTOM) cannot handle namespace prefixes (yet),
 	// so we have to use a namespace-less response envelope
-	respEnvelope := SOAPEnvelopeResponse{XmlNS: XmlNsSoapEnv}
-
-	if s.opts.customEnvelope != "" {
-		respEnvelope.XmlNS = s.opts.customEnvelope
-	}
-
+	respEnvelope := new(SOAPEnvelopeResponse)
 	respEnvelope.Body = SOAPBodyResponse{
 		Content: response,
 		Fault: &SOAPFault{
