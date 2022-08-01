@@ -6,9 +6,12 @@ import (
 	"crypto/tls"
 	"encoding/xml"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"net"
 	"net/http"
+	"regexp"
+	"strings"
 	"time"
 )
 
@@ -506,6 +509,14 @@ func (s *Client) call(ctx context.Context, soapAction string, request, response 
 	if err != nil {
 		return err
 	}
+
+	b, _ := ioutil.ReadAll(res.Body)
+	fmt.Println(string(b[:]))
+	defer res.Body.Close()
+	r := regexp.MustCompile(`\<\?xml*(.*?)utf-8\"\?>`)
+	regexResult := r.ReplaceAllString(string(b), "")
+
+	res.Body = io.NopCloser(strings.NewReader(regexResult))
 	defer res.Body.Close()
 
 	if res.StatusCode >= 400 {
