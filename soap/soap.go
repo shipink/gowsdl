@@ -513,7 +513,7 @@ func (s *Client) call(ctx context.Context, soapAction string, request, response 
 	b, _ := ioutil.ReadAll(res.Body)
 	fmt.Println(string(b[:]))
 	defer res.Body.Close()
-	r := regexp.MustCompile(`\<\?xml*(.*?)utf-8\"\?>`)
+	r := regexp.MustCompile(`\<\?xml*(.*?)utf-8(\"|\')\?>`)
 	regexResult := r.ReplaceAllString(string(b), "")
 
 	res.Body = io.NopCloser(strings.NewReader(regexResult))
